@@ -1,3 +1,13 @@
+## TODO
+
+- [ ] add nav bar
+- [ ] add loadout name input
+- [ ] add clear button
+- [ ] add export button
+- [ ] display loadout weapons
+- [ ] add button to remove weapon from loadout
+- [ ] add fields to edit weapon properties
+
 ## Usage
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
