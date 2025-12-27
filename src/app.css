@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    flex: 1;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.main-content {
+    flex: 3;
+    background-color: #fff;
+    padding: 20px;
+}
+
+/* .weapon-list-item {} */
