@@ -1,13 +1,34 @@
-import { Component, createSignal } from 'solid-js';
+import { Component, createMemo, createSignal, For } from 'solid-js';
 import type { Loadout, LoadoutWeapon, Weapon } from './consts';
 import './app.css';
 
 import weapons_list_json from './weapons.json';
 
-const weapons_list = weapons_list_json as Weapon[];
+const weapons_list: Weapon[] = weapons_list_json;
 
 const App: Component = () => {
     const [loadout, setLoadout] = createSignal<Loadout | null>(null);
+    const [query, setQuery] = createSignal('');
+    const [selectedGroup, setSelectedGroup] = createSignal('All');
+
+    const groups = [
+        'All',
+        ...new Set(weapons_list.map((w) => w.group).filter((g) => g !== '')),
+    ];
+
+    const filteredWeapons = createMemo(() => {
+        const group = selectedGroup();
+
+        return weapons_list.filter((w) => {
+            const matchesText = w.name
+                .toLowerCase()
+                .includes(query().toLowerCase());
+
+            const matchesGroup = !group || group === 'All' || w.group === group;
+
+            return matchesText && matchesGroup;
+        });
+    });
 
     function addWeapon(hash: string) {
         if (loadout() === null) {
@@ -50,7 +71,27 @@ const App: Component = () => {
         <div class='container'>
             <div class='sidebar'>
                 <h1>Weapons list</h1>
-                {weapons_list.map((weapon) => {
+                <div class='weapons-list-search-container'>
+                    <input
+                        class='weapons-list-search-input'
+                        placeholder='Search...'
+                        onChange={(e) => setQuery(e.target.value)}
+                        value={query()}
+                    />
+                    <select onChange={(e) => setSelectedGroup(e.target.value)}>
+                        <For each={groups}>
+                            {(group) => (
+                                <option
+                                    value={group}
+                                    selected={group === selectedGroup()}
+                                >
+                                    {group}
+                                </option>
+                            )}
+                        </For>
+                    </select>
+                </div>
+                {filteredWeapons().map((weapon) => {
                     return (
                         <div class='weapon-list-item'>
                             <img
