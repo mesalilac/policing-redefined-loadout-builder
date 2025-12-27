@@ -125,6 +125,13 @@ const App: Component = () => {
                             </div>
                             <button
                                 onClick={() => addWeapon(weapon.hash)}
+                                disabled={
+                                    (loadout() &&
+                                        loadout()!.weapons.some(
+                                            (w) => w.hash === weapon.hash,
+                                        )) ||
+                                    false
+                                }
                                 class='weapon-list-item-add-btn'
                             >
                                 Add
