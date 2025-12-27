@@ -1,5 +1,5 @@
 import { Component, createSignal } from 'solid-js';
-import type { Loadout, Weapon } from './consts';
+import type { Loadout, LoadoutWeapon, Weapon } from './consts';
 import './app.css';
 
 import weapons_list_json from './weapons.json';
@@ -41,6 +41,7 @@ const App: Component = () => {
         };
 
         setLoadout({
+            name: loadout()!.name,
             weapons: [...loadout()!.weapons, new_weapon],
         });
     }
