@@ -1,4 +1,4 @@
-A loadout builder for [Policing Redefined](https://www.lcpdfr.com/downloads/gta5mods/scripts/52191-policing-redefined/) [lspdfr](https://www.lcpdfr.com/).
+A [loadout builder](https://mesalilac.github.io/policing-redefined-loadout-builder/) for [Policing Redefined](https://www.lcpdfr.com/downloads/gta5mods/scripts/52191-policing-redefined/) [lspdfr](https://www.lcpdfr.com/).
 
 ## Usage
 
