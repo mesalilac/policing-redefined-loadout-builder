@@ -1,0 +1,59 @@
+.sidebar {
+    flex: 1;
+    background-color: #f0f0f0;
+    padding: 20px;
+    max-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.weapons-list-search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+}
+
+.weapons-list-search-input {
+    margin-bottom: 10px;
+}
+
+.weapon-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 20px;
+    background-color: #d7d7d7ff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.weapon-list-item-img {
+    width: 100%;
+    height: 100px;
+    object-fit: scale-down;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.weapon-list-item-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.weapon-list-item-info-text {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.weapon-list-item-add-btn {
+    padding: 6px;
+    align-self: end;
+    margin-top: 10px;
+    width: 100%;
+    cursor: pointer;
+}
