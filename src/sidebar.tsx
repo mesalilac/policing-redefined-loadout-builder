@@ -2,11 +2,9 @@ import { createMemo, createSignal, For, Show } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
 import type { Loadout, LoadoutWeapon, Weapon } from './consts';
 import './sidebar.css';
-import weapons_list_json from './weapons.json';
-
-const weapons_list: Weapon[] = weapons_list_json;
 
 export default (props: {
+    weapons_list: Weapon[];
     loadout: Loadout;
     setLoadout: SetStoreFunction<Loadout>;
 }) => {
@@ -15,13 +13,15 @@ export default (props: {
 
     const groups = [
         'All',
-        ...new Set(weapons_list.map((w) => w.group).filter((g) => g !== '')),
+        ...new Set(
+            props.weapons_list.map((w) => w.group).filter((g) => g !== ''),
+        ),
     ];
 
     const filteredWeapons = createMemo(() => {
         const group = selectedGroup();
 
-        return weapons_list.filter((w) => {
+        return props.weapons_list.filter((w) => {
             const matchesText = w.name
                 .toLowerCase()
                 .includes(query().toLowerCase());
@@ -33,7 +33,7 @@ export default (props: {
     });
 
     function addWeapon(hash: string) {
-        const weapon = weapons_list.find((w) => w.hash === hash);
+        const weapon = props.weapons_list.find((w) => w.hash === hash);
 
         if (
             weapon === undefined ||
