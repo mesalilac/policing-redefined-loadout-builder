@@ -138,7 +138,49 @@ export default (props: {
                         </select>
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
-                        <span>components</span>
+                        <span>
+                            components ({props.weapon.components.length}/
+                            {props.weapons_list.find(
+                                (x) => x.hash === props.weapon.hash,
+                            )?.components.length || 0}
+                            )
+                        </span>
+                        <select
+                            role='listbox'
+                            onChange={(e) => {
+                                const selected = Array.from(
+                                    e.target.selectedOptions,
+                                ).map((x) => x.value);
+
+                                props.setLoadout(
+                                    'weapons',
+                                    (x) => x.hash === props.weapon.hash,
+                                    'components',
+                                    selected,
+                                );
+                            }}
+                            multiple
+                        >
+                            <For
+                                each={
+                                    props.weapons_list.find(
+                                        (x) => x.hash === props.weapon.hash,
+                                    )?.components
+                                }
+                            >
+                                {(component) => (
+                                    <option
+                                        title={component.hash}
+                                        value={component.hash}
+                                        selected={props.weapon.components.includes(
+                                            component.hash,
+                                        )}
+                                    >
+                                        {component.title}
+                                    </option>
+                                )}
+                            </For>
+                        </select>
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
                         <span>tint</span>

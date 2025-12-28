@@ -22,7 +22,7 @@ export interface T_LoadoutWeapon {
     is_vehicle_weapon: boolean | null;
     use_racking_animation: boolean | null;
     weapon_location: T_WeaponLocation | null;
-    components: { title: string; hash: string }[];
+    components: string[];
     tint: number | null;
 }
 
