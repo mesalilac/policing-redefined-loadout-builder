@@ -90,7 +90,7 @@ export default (props: {
                     <div class='weapon-list-item'>
                         <img
                             class='weapon-list-item-img'
-                            src={`/weapons/${weapon.hash}.png`}
+                            src={`./weapons/${weapon.hash}.png`}
                             alt='no image!'
                         />
                         <div class='weapon-list-item-info'>

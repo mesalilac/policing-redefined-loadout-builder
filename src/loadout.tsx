@@ -32,7 +32,7 @@ export default (props: {
         <div class='loadout-weapon-list-item'>
             <img
                 class='loadout-weapon-list-item-img'
-                src={`/weapons/${props.weapon.hash}.png`}
+                src={`./weapons/${props.weapon.hash}.png`}
                 alt='no image!'
             />
             <div class='loadout-weapon-list-item-info'>
