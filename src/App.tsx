@@ -1,215 +1,90 @@
-import { Component, createMemo, createSignal, For, Show } from 'solid-js';
-import type { Loadout, LoadoutWeapon, Weapon } from './consts';
+import { Component, createSignal, For, Show } from 'solid-js';
+import { createStore } from 'solid-js/store';
+import type { Loadout, LoadoutWeapon } from './consts';
+import { DEFAULT_LOADOUT_NAME } from './consts';
+import Sidebar from './sidebar';
 import './app.css';
 
-import weapons_list_json from './weapons.json';
-
-const weapons_list: Weapon[] = weapons_list_json;
-
 const App: Component = () => {
-    const [loadout, setLoadout] = createSignal<Loadout | null>(null);
-    const [query, setQuery] = createSignal('');
     const [loadoutName, setLoadoutName] = createSignal('');
-    const [selectedGroup, setSelectedGroup] = createSignal('All');
-
-    const groups = [
-        'All',
-        ...new Set(weapons_list.map((w) => w.group).filter((g) => g !== '')),
-    ];
-
-    const filteredWeapons = createMemo(() => {
-        const group = selectedGroup();
-
-        return weapons_list.filter((w) => {
-            const matchesText = w.name
-                .toLowerCase()
-                .includes(query().toLowerCase());
-
-            const matchesGroup = !group || group === 'All' || w.group === group;
-
-            return matchesText && matchesGroup;
-        });
+    const [loadout, setLoadout] = createStore<Loadout>({
+        name: DEFAULT_LOADOUT_NAME,
+        weapons: [],
     });
 
     function clearLoadout() {
-        setLoadout(null);
+        setLoadout({
+            name: DEFAULT_LOADOUT_NAME,
+            weapons: [],
+        });
     }
 
     function changeWeaponDisplayname(value: string, hash: string) {
-        if (loadout() === null) return;
-
-        const index = loadout()!.weapons.findIndex((w) => w.hash === hash);
+        const index = loadout.weapons.findIndex((w) => w.hash === hash);
 
         if (index !== -1) {
-            loadout()!.weapons[index].display_name = value;
+            loadout.weapons[index].display_name = value;
         }
     }
 
     function changeWeaponStartingAmmoCount(value: string, hash: string) {
-        if (loadout() === null) return;
+        if (loadout === null) return;
 
-        const index = loadout()!.weapons.findIndex((w) => w.hash === hash);
+        const index = loadout.weapons.findIndex((w) => w.hash === hash);
 
         if (index !== -1) {
-            loadout()!.weapons[index].starting_ammo_count = parseInt(value);
+            loadout.weapons[index].starting_ammo_count = parseInt(value);
         }
     }
 
     function changeWeaponIsVehicleWeapon(value: boolean, hash: string) {
-        if (loadout() === null) return;
+        if (loadout === null) return;
 
-        const index = loadout()!.weapons.findIndex((w) => w.hash === hash);
+        const index = loadout.weapons.findIndex((w) => w.hash === hash);
 
         if (index !== -1) {
-            loadout()!.weapons[index].is_vehicle_weapon = value;
+            loadout.weapons[index].is_vehicle_weapon = value;
         }
     }
 
     function changeWeaponUseRackingAnimation(value: boolean, hash: string) {
-        if (loadout() === null) return;
+        if (loadout === null) return;
 
-        const index = loadout()!.weapons.findIndex((w) => w.hash === hash);
+        const index = loadout.weapons.findIndex((w) => w.hash === hash);
 
         if (index !== -1) {
-            loadout()!.weapons[index].use_racking_animation = value;
+            loadout.weapons[index].use_racking_animation = value;
         }
     }
 
     function clearWeapon(hash: string) {
-        if (loadout() === null) return;
+        if (loadout === null) return;
 
-        const index = loadout()!.weapons.findIndex((w) => w.hash === hash);
+        const index = loadout.weapons.findIndex((w) => w.hash === hash);
 
         if (index !== -1) {
-            loadout()!.weapons[index].display_name = null;
-            loadout()!.weapons[index].starting_ammo_count = null;
-            loadout()!.weapons[index].is_vehicle_weapon = null;
-            loadout()!.weapons[index].use_racking_animation = null;
-            loadout()!.weapons[index].weapon_location = null;
-            loadout()!.weapons[index].components = [];
-            loadout()!.weapons[index].tint = null;
+            loadout.weapons[index].display_name = null;
+            loadout.weapons[index].starting_ammo_count = null;
+            loadout.weapons[index].is_vehicle_weapon = null;
+            loadout.weapons[index].use_racking_animation = null;
+            loadout.weapons[index].weapon_location = null;
+            loadout.weapons[index].components = [];
+            loadout.weapons[index].tint = null;
         }
     }
 
     function removeWeapon(hash: string) {
-        if (loadout() === null) return;
+        if (loadout === null) return;
 
         setLoadout({
-            name: loadout()!.name,
-            weapons: loadout()!.weapons.filter((w) => w.hash !== hash),
-        });
-    }
-
-    function addWeapon(hash: string) {
-        if (loadout() === null) {
-            setLoadout({
-                name: 'New Loadout',
-                weapons: [],
-            });
-        }
-
-        const weapon = weapons_list.find((w) => w.hash === hash);
-
-        if (
-            weapon === undefined ||
-            loadout()!.weapons.some((w) => w.hash === hash)
-        ) {
-            return;
-        }
-
-        const new_weapon: LoadoutWeapon = {
-            name: weapon.name,
-            hash: weapon.hash,
-            model_hash_key: weapon.model_hash_key,
-            group: weapon.group,
-            display_name: null,
-            starting_ammo_count: null,
-            is_vehicle_weapon: null,
-            use_racking_animation: null,
-            weapon_location: null,
-            components: [],
-            tint: null,
-        };
-
-        setLoadout({
-            name: loadout()!.name,
-            weapons: [...loadout()!.weapons, new_weapon],
+            name: loadout.name,
+            weapons: loadout.weapons.filter((w) => w.hash !== hash),
         });
     }
 
     return (
         <div class='container'>
-            <div class='sidebar'>
-                <h1>Weapons list</h1>
-                <div class='weapons-list-search-container'>
-                    <input
-                        class='weapons-list-search-input'
-                        placeholder='Search...'
-                        onChange={(e) => setQuery(e.target.value)}
-                        value={query()}
-                    />
-                    <select onChange={(e) => setSelectedGroup(e.target.value)}>
-                        <For each={groups}>
-                            {(group) => (
-                                <option
-                                    value={group}
-                                    selected={group === selectedGroup()}
-                                >
-                                    {group}
-                                </option>
-                            )}
-                        </For>
-                    </select>
-                </div>
-                {filteredWeapons().map((weapon) => {
-                    return (
-                        <div class='weapon-list-item'>
-                            <img
-                                class='weapon-list-item-img'
-                                src={`/weapons/${weapon.hash}.png`}
-                                alt='no image!'
-                            />
-                            <div class='weapon-list-item-info'>
-                                <div class='weapon-list-item-info-text'>
-                                    <span>
-                                        <strong>Name: </strong>
-                                        {weapon.name}
-                                    </span>
-                                    <span>
-                                        <strong>Hash: </strong>
-                                        {weapon.hash}
-                                    </span>
-                                    <span>
-                                        <strong>Group: </strong>
-                                        {weapon.group}
-                                    </span>
-                                    <span>
-                                        <strong>DLC: </strong>
-                                        {weapon.dlc}
-                                    </span>
-                                    <span>
-                                        <strong>Description: </strong>
-                                        {weapon.description}
-                                    </span>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => addWeapon(weapon.hash)}
-                                disabled={
-                                    (loadout() &&
-                                        loadout()!.weapons.some(
-                                            (w) => w.hash === weapon.hash,
-                                        )) ||
-                                    false
-                                }
-                                class='weapon-list-item-add-btn'
-                            >
-                                Add
-                            </button>
-                        </div>
-                    );
-                })}
-            </div>
+            <Sidebar loadout={loadout} setLoadout={setLoadout} />
             <div class='main-content'>
                 <h1>Loadout builder</h1>
 
@@ -218,12 +93,12 @@ const App: Component = () => {
                         class='loadout-name-input'
                         placeholder='Default Loadout'
                         onChange={(e) => setLoadoutName(e.target.value)}
-                        disabled={loadout() === null}
+                        disabled={loadout === null}
                     />
                     <div class='main-content-navbar-buttons'>
                         <button
                             onClick={() => clearLoadout()}
-                            disabled={loadout() === null}
+                            disabled={loadout === null}
                         >
                             Clear loadout
                         </button>
@@ -232,9 +107,9 @@ const App: Component = () => {
                     </div>
                 </div>
 
-                <Show when={loadout() !== null}>
+                <Show when={loadout !== null}>
                     <div class='loadout-weapons-list'>
-                        <For each={loadout()?.weapons}>
+                        <For each={loadout.weapons}>
                             {(weapon) => (
                                 <div class='loadout-weapon-list-item'>
                                     <img

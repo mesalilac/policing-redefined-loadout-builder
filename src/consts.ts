@@ -27,3 +27,5 @@ export interface Loadout {
     name: string;
     weapons: LoadoutWeapon[];
 }
+
+export const DEFAULT_LOADOUT_NAME = 'Default Loadout';
