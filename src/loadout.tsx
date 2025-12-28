@@ -88,6 +88,19 @@ export default (props: {
                                             'display_name',
                                             props.weapon.name,
                                         );
+
+                                    if (e.target.checked === false) {
+                                        props.setLoadout(
+                                            'weapons',
+                                            (x) => x.hash === props.weapon.hash,
+                                            [
+                                                'display_name',
+                                                'use_racking_animation',
+                                                'weapon_location',
+                                            ],
+                                            null,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -97,6 +110,9 @@ export default (props: {
                                 type='checkbox'
                                 checked={
                                     props.weapon.use_racking_animation || false
+                                }
+                                disabled={
+                                    props.weapon.is_vehicle_weapon !== true
                                 }
                                 onChange={(e) =>
                                     props.setLoadout(
@@ -112,6 +128,7 @@ export default (props: {
                     <div class='loadout-weapon-list-item-setting-input-lable'>
                         <span>weapon location</span>
                         <select
+                            disabled={props.weapon.is_vehicle_weapon !== true}
                             onChange={(e) => {
                                 props.setLoadout(
                                     'weapons',
