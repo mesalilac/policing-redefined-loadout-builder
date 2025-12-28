@@ -1,7 +1,7 @@
 .loadout-weapon-list-item {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
     background-color: #d7d7d7ff;
     padding: 10px;
     border-radius: 8px;
