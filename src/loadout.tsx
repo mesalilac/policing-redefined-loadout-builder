@@ -6,7 +6,7 @@ import type {
     T_Weapon,
     T_WeaponLocation,
 } from './consts';
-import { WEAPON_LOCATIONS } from './consts';
+import { CAN_HAVE_AMMO_GROUPS, WEAPON_LOCATIONS } from './consts';
 import './loadout.css';
 
 export default (props: {
@@ -57,6 +57,11 @@ export default (props: {
                                 type='number'
                                 max={9999}
                                 value={props.weapon.starting_ammo_count || 0}
+                                disabled={
+                                    !CAN_HAVE_AMMO_GROUPS.includes(
+                                        props.weapon.group.toLowerCase(),
+                                    )
+                                }
                                 onChange={(e) =>
                                     props.setLoadout(
                                         'weapons',

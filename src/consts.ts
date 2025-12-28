@@ -9,6 +9,17 @@ export interface T_Weapon {
     tints: string[];
 }
 
+export const CAN_HAVE_AMMO_GROUPS = [
+    'heavy',
+    'shotgun',
+    'sniper',
+    'thrown',
+    'pistol',
+    'smg',
+    'rifle',
+    'machine-gun',
+];
+
 export const WEAPON_LOCATIONS = ['FrontDoors', 'Trunk', 'Any'];
 export type T_WeaponLocation = (typeof WEAPON_LOCATIONS)[number];
 
