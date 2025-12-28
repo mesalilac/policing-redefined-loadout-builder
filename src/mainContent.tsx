@@ -8,20 +8,6 @@ export default (props: {
     loadout: Loadout;
     setLoadout: SetStoreFunction<Loadout>;
 }) => {
-    function clearLoadout() {}
-
-    function changeWeaponDisplayname(value: string, hash: string) {}
-
-    function changeWeaponStartingAmmoCount(value: string, hash: string) {}
-
-    function changeWeaponIsVehicleWeapon(value: boolean, hash: string) {}
-
-    function changeWeaponUseRackingAnimation(value: boolean, hash: string) {}
-
-    function clearWeapon(hash: string) {}
-
-    function removeWeapon(hash: string) {}
-
     return (
         <div class='main-content'>
             <h1>Loadout builder</h1>
@@ -35,7 +21,7 @@ export default (props: {
                 />
                 <div class='main-content-navbar-buttons'>
                     <button
-                        onClick={() => clearLoadout()}
+                        onClick={() => props.setLoadout('weapons', [])}
                         disabled={props.loadout.weapons.length === 0}
                     >
                         Clear loadout
@@ -70,12 +56,15 @@ export default (props: {
                                     </span>
                                     <div class='loadout-weapon-list-item-settings-list'>
                                         <input
-                                            placeholder='Display name'
+                                            placeholder='Display name...'
                                             value={weapon.display_name || ''}
                                             onChange={(e) =>
-                                                changeWeaponDisplayname(
+                                                props.setLoadout(
+                                                    'weapons',
+                                                    (x) =>
+                                                        x.hash === weapon.hash,
+                                                    'display_name',
                                                     e.target.value,
-                                                    weapon.hash,
                                                 )
                                             }
                                             disabled={
@@ -94,9 +83,15 @@ export default (props: {
                                                     0
                                                 }
                                                 onChange={(e) =>
-                                                    changeWeaponStartingAmmoCount(
-                                                        e.target.value,
-                                                        weapon.hash,
+                                                    props.setLoadout(
+                                                        'weapons',
+                                                        (x) =>
+                                                            x.hash ===
+                                                            weapon.hash,
+                                                        'starting_ammo_count',
+                                                        parseInt(
+                                                            e.target.value,
+                                                        ),
                                                     )
                                                 }
                                             />
@@ -109,12 +104,28 @@ export default (props: {
                                                     weapon.is_vehicle_weapon ||
                                                     false
                                                 }
-                                                onChange={(e) =>
-                                                    changeWeaponIsVehicleWeapon(
+                                                onChange={(e) => {
+                                                    props.setLoadout(
+                                                        'weapons',
+                                                        (x) =>
+                                                            x.hash ===
+                                                            weapon.hash,
+                                                        'is_vehicle_weapon',
                                                         e.target.checked,
-                                                        weapon.hash,
+                                                    );
+                                                    if (
+                                                        weapon.display_name ===
+                                                        null
                                                     )
-                                                }
+                                                        props.setLoadout(
+                                                            'weapons',
+                                                            (x) =>
+                                                                x.hash ===
+                                                                weapon.hash,
+                                                            'display_name',
+                                                            weapon.name,
+                                                        );
+                                                }}
                                             />
                                         </div>
                                         <div class='loadout-weapon-list-item-setting-input-lable'>
@@ -126,9 +137,13 @@ export default (props: {
                                                     false
                                                 }
                                                 onChange={(e) =>
-                                                    changeWeaponUseRackingAnimation(
+                                                    props.setLoadout(
+                                                        'weapons',
+                                                        (x) =>
+                                                            x.hash ===
+                                                            weapon.hash,
+                                                        'use_racking_animation',
                                                         e.target.checked,
-                                                        weapon.hash,
                                                     )
                                                 }
                                             />
@@ -149,14 +164,40 @@ export default (props: {
                                 </div>
                             </div>
                             <button
-                                onClick={() => clearWeapon(weapon.hash)}
+                                onClick={() => {
+                                    props.setLoadout(
+                                        'weapons',
+                                        (x) => x.hash === weapon.hash,
+                                        [
+                                            'display_name',
+                                            'starting_ammo_count',
+                                            'is_vehicle_weapon',
+                                            'use_racking_animation',
+                                            'weapon_location',
+                                            'tint',
+                                        ],
+                                        null,
+                                    );
+                                    props.setLoadout(
+                                        'weapons',
+                                        (x) => x.hash === weapon.hash,
+                                        'components',
+                                        [],
+                                    );
+                                }}
                                 class='weapon-list-item-remove-btn'
                                 title='Clear weapon properties'
                             >
                                 clear
                             </button>
                             <button
-                                onClick={() => removeWeapon(weapon.hash)}
+                                onClick={() =>
+                                    props.setLoadout('weapons', (weapons) =>
+                                        weapons.filter(
+                                            (x) => x.hash !== weapon.hash,
+                                        ),
+                                    )
+                                }
                                 class='weapon-list-item-remove-btn'
                             >
                                 Remove
