@@ -6,7 +6,11 @@ import type {
     T_Weapon,
     T_WeaponLocation,
 } from './consts';
-import { CAN_HAVE_AMMO_GROUPS, WEAPON_LOCATIONS } from './consts';
+import {
+    CAN_HAVE_AMMO_GROUPS,
+    DEFAULT_STARTING_AMMO_COUNT,
+    WEAPON_LOCATIONS,
+} from './consts';
 import './loadout.css';
 
 export default (props: {
@@ -15,6 +19,15 @@ export default (props: {
     loadout: T_Loadout;
     setLoadout: SetStoreFunction<T_Loadout>;
 }) => {
+    if (CAN_HAVE_AMMO_GROUPS.includes(props.weapon.group.toLowerCase())) {
+        props.setLoadout(
+            'weapons',
+            (x) => x.hash === props.weapon.hash,
+            'starting_ammo_count',
+            DEFAULT_STARTING_AMMO_COUNT,
+        );
+    }
+
     return (
         <div class='loadout-weapon-list-item'>
             <img
@@ -56,7 +69,7 @@ export default (props: {
                                 class='loadout-weapon-ammo-count-input'
                                 type='number'
                                 max={9999}
-                                value={props.weapon.starting_ammo_count || 0}
+                                value={props.weapon.starting_ammo_count || -1}
                                 disabled={
                                     !CAN_HAVE_AMMO_GROUPS.includes(
                                         props.weapon.group.toLowerCase(),
@@ -67,7 +80,7 @@ export default (props: {
                                         'weapons',
                                         (x) => x.hash === props.weapon.hash,
                                         'starting_ammo_count',
-                                        parseInt(e.target.value),
+                                        parseInt(e.target.value) || null,
                                     )
                                 }
                             />

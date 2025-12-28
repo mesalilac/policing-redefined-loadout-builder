@@ -9,6 +9,8 @@ export interface T_Weapon {
     tints: string[];
 }
 
+export const DEFAULT_STARTING_AMMO_COUNT = 80;
+
 export const CAN_HAVE_AMMO_GROUPS = [
     'heavy',
     'shotgun',
