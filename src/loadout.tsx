@@ -1,6 +1,12 @@
 import { For } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
-import type { T_Loadout, T_LoadoutWeapon, T_Weapon } from './consts';
+import type {
+    T_Loadout,
+    T_LoadoutWeapon,
+    T_Weapon,
+    T_WeaponLocation,
+} from './consts';
+import { WEAPON_LOCATIONS } from './consts';
 import './loadout.css';
 
 export default (props: {
@@ -104,10 +110,31 @@ export default (props: {
                         </div>
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
-                        <span>weapon_location</span>
-                    </div>
-                    <div class='loadout-weapon-list-item-setting-input-lable'>
-                        <span>weapon_location</span>
+                        <span>weapon location</span>
+                        <select
+                            onChange={(e) =>
+                                props.setLoadout(
+                                    'weapons',
+                                    (x) => x.hash === props.weapon.hash,
+                                    'weapon_location',
+                                    e.target.value as T_WeaponLocation,
+                                )
+                            }
+                        >
+                            <option></option>
+                            <For each={WEAPON_LOCATIONS}>
+                                {(location) => (
+                                    <option
+                                        selected={
+                                            props.weapon.weapon_location ===
+                                            location
+                                        }
+                                    >
+                                        {location}
+                                    </option>
+                                )}
+                            </For>
+                        </select>
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
                         <span>components</span>

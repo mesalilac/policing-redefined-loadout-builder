@@ -9,6 +9,9 @@ export interface T_Weapon {
     tints: string[];
 }
 
+export const WEAPON_LOCATIONS = ['FrontDoors', 'Trunk', 'Any'];
+export type T_WeaponLocation = (typeof WEAPON_LOCATIONS)[number];
+
 export interface T_LoadoutWeapon {
     name: string;
     hash: string;
@@ -18,7 +21,7 @@ export interface T_LoadoutWeapon {
     starting_ammo_count: number | null;
     is_vehicle_weapon: boolean | null;
     use_racking_animation: boolean | null;
-    weapon_location: 'FrontDoors' | 'Trunk' | 'Any' | null;
+    weapon_location: T_WeaponLocation | null;
     components: { title: string; hash: string }[];
     tint: number | null;
 }
