@@ -1,13 +1,13 @@
 import { For } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
-import type { Loadout, LoadoutWeapon, Weapon } from './consts';
-import LoadOut from './loadout';
+import type { T_Loadout, T_LoadoutWeapon, T_Weapon } from './consts';
+import Loadout from './loadout';
 import './mainContent.css';
 
 export default (props: {
-    weapons_list: Weapon[];
-    loadout: Loadout;
-    setLoadout: SetStoreFunction<Loadout>;
+    weapons_list: T_Weapon[];
+    loadout: T_Loadout;
+    setLoadout: SetStoreFunction<T_Loadout>;
 }) => {
     return (
         <div class='main-content'>
@@ -35,7 +35,7 @@ export default (props: {
             <div class='loadout-weapons-list'>
                 <For each={props.loadout.weapons}>
                     {(weapon) => (
-                        <LoadOut
+                        <Loadout
                             weapon={weapon}
                             weapons_list={props.weapons_list}
                             loadout={props.loadout}

@@ -1,12 +1,12 @@
 import { createMemo, createSignal, For, Show } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
-import type { Loadout, LoadoutWeapon, Weapon } from './consts';
+import type { T_Loadout, T_LoadoutWeapon, T_Weapon } from './consts';
 import './sidebar.css';
 
 export default (props: {
-    weapons_list: Weapon[];
-    loadout: Loadout;
-    setLoadout: SetStoreFunction<Loadout>;
+    weapons_list: T_Weapon[];
+    loadout: T_Loadout;
+    setLoadout: SetStoreFunction<T_Loadout>;
 }) => {
     const [query, setQuery] = createSignal('');
     const [selectedGroup, setSelectedGroup] = createSignal('All');
@@ -42,7 +42,7 @@ export default (props: {
             return;
         }
 
-        const new_weapon: LoadoutWeapon = {
+        const new_weapon: T_LoadoutWeapon = {
             name: weapon.name,
             hash: weapon.hash,
             model_hash_key: weapon.model_hash_key,

@@ -1,13 +1,13 @@
 import { For } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
-import type { Loadout, LoadoutWeapon, Weapon } from './consts';
+import type { T_Loadout, T_LoadoutWeapon, T_Weapon } from './consts';
 import './loadout.css';
 
 export default (props: {
-    weapon: LoadoutWeapon;
-    weapons_list: Weapon[];
-    loadout: Loadout;
-    setLoadout: SetStoreFunction<Loadout>;
+    weapon: T_LoadoutWeapon;
+    weapons_list: T_Weapon[];
+    loadout: T_Loadout;
+    setLoadout: SetStoreFunction<T_Loadout>;
 }) => {
     return (
         <div class='loadout-weapon-list-item'>

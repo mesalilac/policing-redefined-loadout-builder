@@ -1,4 +1,4 @@
-export interface Weapon {
+export interface T_Weapon {
     name: string;
     hash: string;
     model_hash_key: string;
@@ -9,7 +9,7 @@ export interface Weapon {
     tints: string[];
 }
 
-export interface LoadoutWeapon {
+export interface T_LoadoutWeapon {
     name: string;
     hash: string;
     model_hash_key: string;
@@ -23,9 +23,9 @@ export interface LoadoutWeapon {
     tint: number | null;
 }
 
-export interface Loadout {
+export interface T_Loadout {
     name: string;
-    weapons: LoadoutWeapon[];
+    weapons: T_LoadoutWeapon[];
 }
 
 export const DEFAULT_LOADOUT_NAME = 'Default Loadout';
