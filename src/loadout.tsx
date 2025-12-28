@@ -112,14 +112,15 @@ export default (props: {
                     <div class='loadout-weapon-list-item-setting-input-lable'>
                         <span>weapon location</span>
                         <select
-                            onChange={(e) =>
+                            onChange={(e) => {
                                 props.setLoadout(
                                     'weapons',
                                     (x) => x.hash === props.weapon.hash,
                                     'weapon_location',
-                                    e.target.value as T_WeaponLocation,
-                                )
-                            }
+                                    (e.target.value ||
+                                        null) as T_WeaponLocation,
+                                );
+                            }}
                         >
                             <option></option>
                             <For each={WEAPON_LOCATIONS}>
