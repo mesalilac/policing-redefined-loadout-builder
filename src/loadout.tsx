@@ -1,4 +1,4 @@
-import { For } from 'solid-js';
+import { For, Show } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
 import type {
     T_Loadout,
@@ -162,42 +162,44 @@ export default (props: {
                             )?.components.length || 0}
                             )
                         </span>
-                        <select
-                            role='listbox'
-                            onChange={(e) => {
-                                const selected = Array.from(
-                                    e.target.selectedOptions,
-                                ).map((x) => x.value);
+                        <Show when={props.weapon.components.length > 0}>
+                            <select
+                                role='listbox'
+                                onChange={(e) => {
+                                    const selected = Array.from(
+                                        e.target.selectedOptions,
+                                    ).map((x) => x.value);
 
-                                props.setLoadout(
-                                    'weapons',
-                                    (x) => x.hash === props.weapon.hash,
-                                    'components',
-                                    selected,
-                                );
-                            }}
-                            multiple
-                        >
-                            <For
-                                each={
-                                    props.weapons_list.find(
+                                    props.setLoadout(
+                                        'weapons',
                                         (x) => x.hash === props.weapon.hash,
-                                    )?.components
-                                }
+                                        'components',
+                                        selected,
+                                    );
+                                }}
+                                multiple
                             >
-                                {(component) => (
-                                    <option
-                                        title={component.hash}
-                                        value={component.hash}
-                                        selected={props.weapon.components.includes(
-                                            component.hash,
-                                        )}
-                                    >
-                                        {component.title}
-                                    </option>
-                                )}
-                            </For>
-                        </select>
+                                <For
+                                    each={
+                                        props.weapons_list.find(
+                                            (x) => x.hash === props.weapon.hash,
+                                        )?.components
+                                    }
+                                >
+                                    {(component) => (
+                                        <option
+                                            title={component.hash}
+                                            value={component.hash}
+                                            selected={props.weapon.components.includes(
+                                                component.hash,
+                                            )}
+                                        >
+                                            {component.title}
+                                        </option>
+                                    )}
+                                </For>
+                            </select>
+                        </Show>
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
                         <span>tint</span>
