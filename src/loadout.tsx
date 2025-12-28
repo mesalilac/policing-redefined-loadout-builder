@@ -180,7 +180,13 @@ export default (props: {
                             )?.components.length || 0}
                             )
                         </span>
-                        <Show when={props.weapon.components.length > 0}>
+                        <Show
+                            when={
+                                props.weapons_list.find(
+                                    (x) => x.hash === props.weapon.hash,
+                                )?.components.length || 0 > 0
+                            }
+                        >
                             <select
                                 role='listbox'
                                 onChange={(e) => {
