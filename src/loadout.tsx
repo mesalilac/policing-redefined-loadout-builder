@@ -201,6 +201,29 @@ export default (props: {
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
                         <span>tint</span>
+                        <select
+                            onChange={(e) => {
+                                props.setLoadout(
+                                    'weapons',
+                                    (x) => x.hash === props.weapon.hash,
+                                    'tint',
+                                    parseInt(e.target.value) || null,
+                                );
+                            }}
+                        >
+                            <option></option>
+                            <For
+                                each={
+                                    props.weapons_list.find(
+                                        (x) => x.hash === props.weapon.hash,
+                                    )?.tints
+                                }
+                            >
+                                {(tint, index) => (
+                                    <option value={index()}>{tint}</option>
+                                )}
+                            </For>
+                        </select>
                     </div>
                 </div>
             </div>
