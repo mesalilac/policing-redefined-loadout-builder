@@ -1,12 +1,4 @@
-## TODO
-
-- [ ] add nav bar
-- [ ] add loadout name input
-- [ ] add clear button
-- [ ] add export button
-- [ ] display loadout weapons
-- [ ] add button to remove weapon from loadout
-- [ ] add fields to edit weapon properties
+A loadout builder for [Policing Redefined](https://www.lcpdfr.com/downloads/gta5mods/scripts/52191-policing-redefined/) [lspdfr](https://www.lcpdfr.com/).
 
 ## Usage
 
