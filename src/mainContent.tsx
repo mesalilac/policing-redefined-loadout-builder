@@ -9,6 +9,10 @@ export default (props: {
     loadout: T_Loadout;
     setLoadout: SetStoreFunction<T_Loadout>;
 }) => {
+    function exportLoadout() {
+        console.log(props.loadout.weapons);
+    }
+
     return (
         <div class='main-content'>
             <h1>Loadout builder</h1>
@@ -28,7 +32,9 @@ export default (props: {
                         Clear loadout
                     </button>
                     <button disabled={true}>Load loadout</button>
-                    <button disabled={true}>Export loadout</button>
+                    <button onClick={() => exportLoadout()}>
+                        Export loadout
+                    </button>
                 </div>
             </div>
 
