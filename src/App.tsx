@@ -9,6 +9,7 @@ const weapons_list: Weapon[] = weapons_list_json;
 const App: Component = () => {
     const [loadout, setLoadout] = createSignal<Loadout | null>(null);
     const [query, setQuery] = createSignal('');
+    const [loadoutName, setLoadoutName] = createSignal('');
     const [selectedGroup, setSelectedGroup] = createSignal('All');
 
     const groups = [
@@ -29,6 +30,10 @@ const App: Component = () => {
             return matchesText && matchesGroup;
         });
     });
+
+    function clearLoadout() {
+        setLoadout(null);
+    }
 
     function addWeapon(hash: string) {
         if (loadout() === null) {
@@ -142,6 +147,22 @@ const App: Component = () => {
             </div>
             <div class='main-content'>
                 <h1>Loadout builder</h1>
+
+                <div class='main-content-navbar'>
+                    <input
+                        class='loadout-name-input'
+                        placeholder='Default Loadout'
+                        onChange={(e) => setLoadoutName(e.target.value)}
+                        disabled={loadout() === null}
+                    />
+                    <div class='main-content-navbar-buttons'>
+                        <button onClick={() => clearLoadout()}>
+                            Clear loadout
+                        </button>
+                        <button disabled={true}>Load loadout</button>
+                        <button disabled={true}>Export loadout</button>
+                    </div>
+                </div>
             </div>
         </div>
     );

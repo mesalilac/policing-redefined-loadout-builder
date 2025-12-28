@@ -37,6 +37,19 @@
     box-sizing: border-box;
 }
 
+.main-content-navbar {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.main-content-navbar-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 .weapon-list-item {
     display: flex;
     flex-direction: column;
