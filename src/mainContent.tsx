@@ -1,3 +1,4 @@
+import { XMLBuilder } from 'fast-xml-parser';
 import { For } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
 import type { T_Loadout, T_LoadoutWeapon, T_Weapon } from './consts';
@@ -10,7 +11,57 @@ export default (props: {
     setLoadout: SetStoreFunction<T_Loadout>;
 }) => {
     function exportLoadout() {
+        const builder = new XMLBuilder({
+            ignoreAttributes: false,
+            suppressBooleanAttributes: false,
+            format: true,
+        });
+
+        const obj = {
+            Loadout: {
+                '@_LoadoutName': props.loadout.name,
+                '@_IsDefaultLoadout': 'true',
+                LoadoutWeapons: {
+                    LoadoutWeapon: props.loadout.weapons.map((w) => {
+                        const weaponNode = {
+                            '@_WeaponHash': w.hash,
+                            ...(w.starting_ammo_count !== null && {
+                                '@_StartingAmmoCount': w.starting_ammo_count,
+                            }),
+                            ...(w.is_vehicle_weapon !== null && {
+                                '@_IsVehicleWeapon': w.is_vehicle_weapon,
+                            }),
+                            ...(w.use_racking_animation !== null && {
+                                '@_UseRackingAnimation':
+                                    w.use_racking_animation,
+                            }),
+                            ...(w.weapon_location !== null && {
+                                '@_WeaponLocation': w.weapon_location,
+                            }),
+                            ...(w.tint !== null && {
+                                '@_WeaponTintIndex': w.tint,
+                            }),
+                            ...(w.display_name !== null && {
+                                '@_WeaponDisplayName': w.display_name,
+                            }),
+
+                            WeaponComponents: {
+                                WeaponComponent: w.components.map((c) => ({
+                                    '@_ComponentHash': c,
+                                })),
+                            },
+                        };
+
+                        return weaponNode;
+                    }),
+                },
+            },
+        };
+
+        const xml = builder.build(obj);
+
         console.log(props.loadout.weapons);
+        console.log(xml);
     }
 
     return (
