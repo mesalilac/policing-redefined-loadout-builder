@@ -27,3 +27,30 @@
     padding: 10px;
     gap: 1rem;
 }
+
+.main-content-xml-output-dialog {
+    position: fixed;
+    /* Positions relative to the viewport */
+    top: 50%;
+    /* Moves the top edge to the middle of the screen */
+    left: 50%;
+    /* Moves the left edge to the middle of the screen */
+    transform: translate(-50%, -50%);
+    /* Shifts the element back by half its own width/height to center it perfectly */
+    background-color: #d7d7d7ff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.main-content-xml-output-dialog button {
+    padding: 1rem;
+}
+
+.main-content-xml-textarea {
+    width: 600px;
+    height: 300px;
+    resize: none;
+}

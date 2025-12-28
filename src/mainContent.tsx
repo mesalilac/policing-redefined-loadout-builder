@@ -1,5 +1,5 @@
 import { XMLBuilder } from 'fast-xml-parser';
-import { For } from 'solid-js';
+import { createSignal, For, Show } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
 import type { T_Loadout, T_LoadoutWeapon, T_Weapon } from './consts';
 import Loadout from './loadout';
@@ -10,6 +10,9 @@ export default (props: {
     loadout: T_Loadout;
     setLoadout: SetStoreFunction<T_Loadout>;
 }) => {
+    const [xmlOutput, setXmlOutput] = createSignal('');
+    const [showXmlOutput, setShowXmlOutput] = createSignal(false);
+
     function exportLoadout() {
         const builder = new XMLBuilder({
             ignoreAttributes: false,
@@ -60,8 +63,8 @@ export default (props: {
 
         const xml = builder.build(obj);
 
-        console.log(props.loadout.weapons);
-        console.log(xml);
+        setXmlOutput(xml);
+        setShowXmlOutput(true);
     }
 
     return (
@@ -83,6 +86,20 @@ export default (props: {
                         Clear loadout
                     </button>
                     <button disabled={true}>Load loadout</button>
+                    <Show when={showXmlOutput()}>
+                        <div class='main-content-xml-output-dialog'>
+                            <h1>XML output</h1>
+                            <textarea
+                                class='main-content-xml-textarea'
+                                value={xmlOutput()}
+                                wrap='soft'
+                                spellcheck={false}
+                            />
+                            <button onClick={() => setShowXmlOutput(false)}>
+                                Close
+                            </button>
+                        </div>
+                    </Show>
                     <button onClick={() => exportLoadout()}>
                         Export loadout
                     </button>
