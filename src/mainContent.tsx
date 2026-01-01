@@ -21,9 +21,13 @@ export default (props: {
 }) => {
     const [xmlOutput, setXmlOutput] = createSignal('');
     const [showXmlOutput, setShowXmlOutput] = createSignal(false);
+    const [hasSavedLoadout, setHasSavedLoadout] = createSignal(
+        localStorage.getItem(LOADOUT_KEY) !== null,
+    );
 
     function saveCurrentloadout() {
         localStorage.setItem(LOADOUT_KEY, JSON.stringify(props.loadout));
+        setHasSavedLoadout(true);
         toast.success('Saved current loadout');
     }
 
@@ -37,6 +41,7 @@ export default (props: {
 
     function clearSavedloadout() {
         localStorage.removeItem(LOADOUT_KEY);
+        setHasSavedLoadout(false);
         toast.success('Saved loadout cleared');
     }
 
@@ -119,7 +124,10 @@ export default (props: {
                     <button onClick={() => saveCurrentloadout()}>
                         Save current loadout
                     </button>
-                    <button onClick={() => loadSavedloadout()}>
+                    <button
+                        onClick={() => loadSavedloadout()}
+                        disabled={!hasSavedLoadout()}
+                    >
                         Load saved loadout
                     </button>
                     <button onClick={() => clearSavedloadout()}>
