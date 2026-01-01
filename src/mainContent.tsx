@@ -62,7 +62,7 @@ export default (props: {
                     use_racking_animation: null,
                     weapon_location: 'Trunk',
                     components: ['COMPONENT_AT_AR_FLSH'],
-                    tint: null,
+                    tint: 5,
                 },
                 {
                     name: 'Pistol',
@@ -88,7 +88,7 @@ export default (props: {
                     use_racking_animation: null,
                     weapon_location: null,
                     components: [],
-                    tint: null,
+                    tint: 5,
                 },
                 {
                     name: 'Nightstick',
