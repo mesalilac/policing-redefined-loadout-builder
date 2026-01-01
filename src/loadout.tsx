@@ -73,7 +73,7 @@ export default (props: {
                                 class='loadout-weapon-ammo-count-input'
                                 type='number'
                                 max={9999}
-                                value={props.weapon.starting_ammo_count || -1}
+                                value={props.weapon.starting_ammo_count || 0}
                                 disabled={
                                     !CAN_HAVE_AMMO_GROUPS.includes(
                                         props.weapon.group.toLowerCase(),
