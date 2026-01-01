@@ -163,8 +163,9 @@ export default (props: {
 
             <div class='loadout-weapons-list'>
                 <For each={props.loadout.weapons}>
-                    {(weapon) => (
+                    {(weapon, index) => (
                         <Loadout
+                            currentIndex={index()}
                             weapon={weapon}
                             weapons_list={props.weapons_list}
                             loadout={props.loadout}

@@ -14,6 +14,7 @@ import {
 import './loadout.css';
 
 export default (props: {
+    currentIndex: number;
     weapon: T_LoadoutWeapon;
     weapons_list: T_Weapon[];
     loadout: T_Loadout;
@@ -29,8 +30,54 @@ export default (props: {
         );
     }
 
+    function moveWeapon(direction: number) {
+        const newList = [...props.loadout.weapons];
+        const currentIndex = props.currentIndex;
+        const targetIndex = currentIndex + direction;
+
+        if (
+            targetIndex < 0 ||
+            targetIndex >= newList.length ||
+            targetIndex === currentIndex
+        )
+            return;
+
+        [newList[currentIndex], newList[targetIndex]] = [
+            newList[targetIndex],
+            newList[currentIndex],
+        ];
+
+        props.setLoadout('weapons', newList);
+    }
+
     return (
         <div class='loadout-weapon-list-item'>
+            <div class='loadout-weapon-reorder-buttons'>
+                <button
+                    onClick={(e) =>
+                        e.shiftKey
+                            ? moveWeapon(-props.currentIndex)
+                            : moveWeapon(-1)
+                    }
+                    disabled={props.currentIndex === 0}
+                    title='Move weapon backward (Shift + Click to send to start)'
+                >
+                    {'<'}
+                </button>
+                <button
+                    onClick={(e) =>
+                        e.shiftKey
+                            ? moveWeapon(props.loadout.weapons.length - 1)
+                            : moveWeapon(1)
+                    }
+                    disabled={
+                        props.currentIndex === props.loadout.weapons.length - 1
+                    }
+                    title='Move weapon forward (Shift + Click to send to end)'
+                >
+                    {'>'}
+                </button>
+            </div>
             <img
                 class='loadout-weapon-list-item-img'
                 src={`./weapons/${props.weapon.hash}.png`}

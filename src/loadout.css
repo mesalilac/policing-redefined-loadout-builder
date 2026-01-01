@@ -54,3 +54,16 @@
     width: 100%;
     cursor: pointer;
 }
+
+.loadout-weapon-reorder-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+
+    button {
+        width: 100%;
+    }
+}
