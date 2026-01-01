@@ -7,6 +7,14 @@
     box-sizing: border-box;
 }
 
+.sidebar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .weapons-list-search-container {
     display: flex;
     flex-direction: row;

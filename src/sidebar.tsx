@@ -64,7 +64,12 @@ export default (props: {
 
     return (
         <div class='sidebar'>
-            <h1>Weapons list</h1>
+            <div class='sidebar-header'>
+                <h1>Weapons list</h1>
+                <a href='https://policing-redefined.netlify.app/docs/user-docs/configuration/loadouts/'>
+                    (Official docs)
+                </a>
+            </div>
             <div class='weapons-list-search-container'>
                 <input
                     class='weapons-list-search-input'
