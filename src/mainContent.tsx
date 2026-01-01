@@ -1,7 +1,12 @@
 import { XMLBuilder } from 'fast-xml-parser';
-import { createSignal, For, Show } from 'solid-js';
+import { createSignal, For, onMount, Show } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
-import type { T_Loadout, T_LoadoutWeapon, T_Weapon } from './consts';
+import {
+    DEFAULT_LOADOUT_NAME,
+    type T_Loadout,
+    type T_LoadoutWeapon,
+    type T_Weapon,
+} from './consts';
 import Loadout from './loadout';
 import './mainContent.css';
 
@@ -12,6 +17,95 @@ export default (props: {
 }) => {
     const [xmlOutput, setXmlOutput] = createSignal('');
     const [showXmlOutput, setShowXmlOutput] = createSignal(false);
+
+    onMount(() => {
+        if (props.loadout.weapons.length === 0) {
+            props.setLoadout('name', DEFAULT_LOADOUT_NAME);
+            props.setLoadout('weapons', [
+                {
+                    name: 'Pump Shotgun',
+                    hash: 'WEAPON_PUMPSHOTGUN',
+                    model_hash_key: 'w_sg_pumpshotgun',
+                    group: 'shotgun',
+                    display_name: 'Pump Shotgun',
+                    starting_ammo_count: 20,
+                    is_vehicle_weapon: true,
+                    use_racking_animation: null,
+                    weapon_location: 'FrontDoors',
+                    components: ['COMPONENT_AT_AR_FLSH'],
+                    tint: 5,
+                },
+                {
+                    name: 'Carbine Rifle',
+                    hash: 'WEAPON_CARBINERIFLE',
+                    model_hash_key: 'W_AR_CARBINERIFLE',
+                    group: 'rifle',
+                    display_name: 'Carbine Rifle',
+                    starting_ammo_count: 60,
+                    is_vehicle_weapon: true,
+                    use_racking_animation: true,
+                    weapon_location: 'FrontDoors',
+                    components: [
+                        'COMPONENT_AT_AR_AFGRIP',
+                        'COMPONENT_AT_AR_FLSH',
+                    ],
+                    tint: 5,
+                },
+                {
+                    name: 'Tear Gas Launcher',
+                    hash: 'WEAPON_GRENADELAUNCHER_SMOKE',
+                    model_hash_key: 'w_lr_grenadelauncher',
+                    group: 'heavy',
+                    display_name: 'Smoke Launcher',
+                    starting_ammo_count: 20,
+                    is_vehicle_weapon: true,
+                    use_racking_animation: null,
+                    weapon_location: 'Trunk',
+                    components: ['COMPONENT_AT_AR_FLSH'],
+                    tint: null,
+                },
+                {
+                    name: 'Pistol',
+                    hash: 'WEAPON_PISTOL',
+                    model_hash_key: 'W_PI_PISTOL',
+                    group: 'pistol',
+                    display_name: null,
+                    starting_ammo_count: 90,
+                    is_vehicle_weapon: null,
+                    use_racking_animation: null,
+                    weapon_location: null,
+                    components: ['COMPONENT_AT_PI_FLSH'],
+                    tint: 5,
+                },
+                {
+                    name: 'Stun Gun',
+                    hash: 'WEAPON_STUNGUN',
+                    model_hash_key: 'w_pi_stungun',
+                    group: 'stun-gun',
+                    display_name: null,
+                    starting_ammo_count: null,
+                    is_vehicle_weapon: null,
+                    use_racking_animation: null,
+                    weapon_location: null,
+                    components: [],
+                    tint: null,
+                },
+                {
+                    name: 'Nightstick',
+                    hash: 'WEAPON_NIGHTSTICK',
+                    model_hash_key: 'w_me_nightstick',
+                    group: 'melee',
+                    display_name: null,
+                    starting_ammo_count: null,
+                    is_vehicle_weapon: null,
+                    use_racking_animation: null,
+                    weapon_location: null,
+                    components: [],
+                    tint: null,
+                },
+            ]);
+        }
+    });
 
     function exportLoadout() {
         const builder = new XMLBuilder({
