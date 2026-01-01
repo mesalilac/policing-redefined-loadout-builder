@@ -53,6 +53,7 @@ export default (props: {
                     <div class='loadout-weapon-list-item-settings-list'>
                         <input
                             placeholder='Display name...'
+                            title='The name that should be displayed in the patrol vehicle menu'
                             value={props.weapon.display_name || ''}
                             onChange={(e) =>
                                 props.setLoadout(
@@ -65,7 +66,9 @@ export default (props: {
                             disabled={props.weapon.is_vehicle_weapon !== true}
                         />
                         <div class='loadout-weapon-list-item-setting-input-lable'>
-                            <span>Starting ammo count</span>
+                            <span title='How much ammo this weapon should get when the loadout is equipped'>
+                                Starting ammo count
+                            </span>
                             <input
                                 class='loadout-weapon-ammo-count-input'
                                 type='number'
@@ -87,7 +90,9 @@ export default (props: {
                             />
                         </div>
                         <div class='loadout-weapon-list-item-setting-input-lable'>
-                            <span>is vehicle weapon</span>
+                            <span title='Whether this weapon has to be retrieved from a patrol vehicle first'>
+                                is vehicle weapon
+                            </span>
                             <input
                                 type='checkbox'
                                 checked={
@@ -124,7 +129,9 @@ export default (props: {
                             />
                         </div>
                         <div class='loadout-weapon-list-item-setting-input-lable'>
-                            <span>use racking animation</span>
+                            <span title='Whether a small animation should be played when you retrieve the weapon from a patrol vehicle'>
+                                use racking animation
+                            </span>
                             <input
                                 type='checkbox'
                                 checked={
@@ -145,7 +152,9 @@ export default (props: {
                         </div>
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
-                        <span>weapon location</span>
+                        <span title='Where the weapon is located in the vehicle (FrontDoors, Trunk, Any)'>
+                            weapon location
+                        </span>
                         <select
                             disabled={props.weapon.is_vehicle_weapon !== true}
                             onChange={(e) => {
@@ -174,7 +183,7 @@ export default (props: {
                         </select>
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
-                        <span>
+                        <span title='Weapon attachments'>
                             components ({props.weapon.components.length}/
                             {props.weapons_list.find(
                                 (x) => x.hash === props.weapon.hash,
@@ -227,7 +236,7 @@ export default (props: {
                         </Show>
                     </div>
                     <div class='loadout-weapon-list-item-setting-input-lable'>
-                        <span>tint</span>
+                        <span title='The tint of the weapon'>tint</span>
                         <select
                             onChange={(e) => {
                                 props.setLoadout(
@@ -293,6 +302,7 @@ export default (props: {
                     )
                 }
                 class='weapon-list-item-remove-btn'
+                title='Remove weapon from loadout'
             >
                 Remove
             </button>
