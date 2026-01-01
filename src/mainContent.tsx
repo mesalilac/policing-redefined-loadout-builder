@@ -11,6 +11,8 @@ import {
 import Loadout from './loadout';
 import './mainContent.css';
 
+const LOADOUT_KEY = 'Loadout';
+
 export default (props: {
     weapons_list: T_Weapon[];
     loadout: T_Loadout;
@@ -19,8 +21,25 @@ export default (props: {
     const [xmlOutput, setXmlOutput] = createSignal('');
     const [showXmlOutput, setShowXmlOutput] = createSignal(false);
 
+    function saveCurrentloadout() {
+        localStorage.setItem(LOADOUT_KEY, JSON.stringify(props.loadout));
+    }
+
+    function loadSavedloadout() {
+        const savedLoadout = localStorage.getItem(LOADOUT_KEY);
+        if (savedLoadout) {
+            props.setLoadout(JSON.parse(savedLoadout));
+        }
+    }
+
+    function clearSavedloadout() {
+        localStorage.removeItem(LOADOUT_KEY);
+    }
+
     onMount(() => {
-        if (props.loadout.weapons.length === 0) {
+        if (localStorage.getItem(LOADOUT_KEY)) {
+            loadSavedloadout();
+        } else {
             props.setLoadout('name', DEFAULT_LOADOUT_NAME);
             props.setLoadout('weapons', DEFAULT_LOADOUT_WEAPONS);
         }
@@ -91,6 +110,17 @@ export default (props: {
                     value={props.loadout.name}
                     onChange={(e) => props.setLoadout('name', e.target.value)}
                 />
+                <div class='main-content-navbar-saved-loadout-buttons'>
+                    <button onClick={() => saveCurrentloadout()}>
+                        Save current loadout
+                    </button>
+                    <button onClick={() => loadSavedloadout()}>
+                        Load saved loadout
+                    </button>
+                    <button onClick={() => clearSavedloadout()}>
+                        Clear saved loadout
+                    </button>
+                </div>
                 <div class='main-content-navbar-buttons'>
                     <button
                         onClick={() => props.setLoadout('weapons', [])}
@@ -98,7 +128,6 @@ export default (props: {
                     >
                         Clear loadout
                     </button>
-                    <button disabled={true}>Load loadout</button>
                     <Show when={showXmlOutput()}>
                         <div class='main-content-xml-output-dialog'>
                             <h1>XML output</h1>
