@@ -22,7 +22,8 @@ export default (props: {
     if (CAN_HAVE_AMMO_GROUPS.includes(props.weapon.group.toLowerCase())) {
         props.setLoadout(
             'weapons',
-            (x) => x.hash === props.weapon.hash,
+            (x) =>
+                x.hash === props.weapon.hash && x.starting_ammo_count === null,
             'starting_ammo_count',
             DEFAULT_STARTING_AMMO_COUNT,
         );
