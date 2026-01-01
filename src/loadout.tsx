@@ -246,7 +246,12 @@ export default (props: {
                                 }
                             >
                                 {(tint, index) => (
-                                    <option value={index()}>{tint}</option>
+                                    <option
+                                        value={index()}
+                                        selected={props.weapon.tint === index()}
+                                    >
+                                        {tint}
+                                    </option>
                                 )}
                             </For>
                         </select>
