@@ -1,6 +1,7 @@
 import { XMLBuilder } from 'fast-xml-parser';
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
+import toast from 'solid-toast';
 import {
     DEFAULT_LOADOUT_NAME,
     DEFAULT_LOADOUT_WEAPONS,
@@ -23,17 +24,20 @@ export default (props: {
 
     function saveCurrentloadout() {
         localStorage.setItem(LOADOUT_KEY, JSON.stringify(props.loadout));
+        toast.success('Saved current loadout');
     }
 
     function loadSavedloadout() {
         const savedLoadout = localStorage.getItem(LOADOUT_KEY);
         if (savedLoadout) {
             props.setLoadout(JSON.parse(savedLoadout));
+            toast.success('Saved loadout loaded');
         }
     }
 
     function clearSavedloadout() {
         localStorage.removeItem(LOADOUT_KEY);
+        toast.success('Saved loadout cleared');
     }
 
     onMount(() => {
@@ -42,6 +46,7 @@ export default (props: {
         } else {
             props.setLoadout('name', DEFAULT_LOADOUT_NAME);
             props.setLoadout('weapons', DEFAULT_LOADOUT_WEAPONS);
+            toast.success('Default loadout loaded');
         }
     });
 
