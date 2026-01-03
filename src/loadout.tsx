@@ -274,7 +274,12 @@ export default (props: {
                                             selected={props.weapon.components.includes(
                                                 component.hash,
                                             )}
+                                            class='loadout-weapon-list-item-component-option'
                                         >
+                                            <img
+                                                src={`./components/${component.hash}.png`}
+                                                class='loadout-weapon-list-item-component-image'
+                                            />
                                             {component.title}
                                         </option>
                                     )}

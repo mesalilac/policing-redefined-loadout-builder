@@ -47,6 +47,21 @@
     flex-direction: column;
 }
 
+.loadout-weapon-list-item-component-option {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loadout-weapon-list-item-component-image {
+    width: 80px;
+    height: 50px;
+    object-fit: scale-down;
+    padding: 10px;
+    border-radius: 8px;
+}
+
 .weapon-list-item-remove-btn {
     padding: 6px;
     align-self: end;
