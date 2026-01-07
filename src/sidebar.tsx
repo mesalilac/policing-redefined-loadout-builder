@@ -66,6 +66,9 @@ export default (props: {
         <div class='sidebar'>
             <div class='sidebar-header'>
                 <h1>Weapons list</h1>
+                <a href='https://github.com/mesalilac/policing-redefined-loadout-builder'>
+                    (Source code)
+                </a>
                 <a href='https://policing-redefined.netlify.app/docs/user-docs/configuration/loadouts/'>
                     (Official docs)
                 </a>
