@@ -1,4 +1,4 @@
-export interface T_Weapon {
+export type T_Weapon = {
     name: string;
     hash: string;
     model_hash_key: string;
@@ -7,7 +7,7 @@ export interface T_Weapon {
     description: string;
     components: { title: string; hash: string }[];
     tints: string[];
-}
+};
 
 export const DEFAULT_STARTING_AMMO_COUNT = 80;
 
@@ -25,7 +25,7 @@ export const CAN_HAVE_AMMO_GROUPS = [
 export const WEAPON_LOCATIONS = ['FrontDoors', 'Trunk', 'Any'];
 export type T_WeaponLocation = (typeof WEAPON_LOCATIONS)[number];
 
-export interface T_LoadoutWeapon {
+export type T_LoadoutWeapon = {
     name: string;
     hash: string;
     model_hash_key: string;
@@ -37,12 +37,16 @@ export interface T_LoadoutWeapon {
     weapon_location: T_WeaponLocation | null;
     components: string[];
     tint: number | null;
-}
+};
 
-export interface T_Loadout {
+export type T_Loadout = {
     name: string;
     weapons: T_LoadoutWeapon[];
-}
+};
+
+export type T_SavedLoadout = T_Loadout & {
+    id: number;
+};
 
 export const DEFAULT_LOADOUT_NAME = 'Default Loadout';
 
