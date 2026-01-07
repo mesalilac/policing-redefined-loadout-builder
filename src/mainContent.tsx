@@ -272,6 +272,7 @@ export default (props: {
                     <button
                         onClick={() =>
                             exportAllLoadouts({
+                                loadout: props.loadout,
                                 setXmlOutput,
                                 setShowXmlOutput,
                                 selectedSavedLoadoutID,
