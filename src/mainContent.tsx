@@ -9,8 +9,7 @@ import {
     type T_SavedLoadout,
     type T_Weapon,
 } from './consts';
-import { exportAllLoadouts } from './exportAllLoadouts';
-import { exportLoadout } from './exportLoadout';
+import { exportAllLoadouts, exportLoadout } from './exportLoadout';
 import Loadout from './loadout';
 import './mainContent.css';
 
