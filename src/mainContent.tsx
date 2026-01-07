@@ -1,5 +1,4 @@
 import { trackStore } from '@solid-primitives/deep';
-import { XMLBuilder } from 'fast-xml-parser';
 import { createMemo, createSignal, For, onMount, Show } from 'solid-js';
 import { SetStoreFunction, unwrap } from 'solid-js/store';
 import toast from 'solid-toast';
@@ -10,6 +9,7 @@ import {
     type T_SavedLoadout,
     type T_Weapon,
 } from './consts';
+import { exportLoadout } from './exportLoadout';
 import Loadout from './loadout';
 import './mainContent.css';
 
@@ -139,60 +139,6 @@ export default (props: {
         syncSavedLoadouts();
     };
 
-    function exportLoadout() {
-        const builder = new XMLBuilder({
-            ignoreAttributes: false,
-            suppressBooleanAttributes: false,
-            format: true,
-        });
-
-        const obj = {
-            Loadout: {
-                '@_LoadoutName': props.loadout.name,
-                '@_IsDefaultLoadout': 'true',
-                LoadoutWeapons: {
-                    LoadoutWeapon: props.loadout.weapons.map((w) => {
-                        const weaponNode = {
-                            '@_WeaponHash': w.hash,
-                            ...(w.starting_ammo_count !== null && {
-                                '@_StartingAmmoCount': w.starting_ammo_count,
-                            }),
-                            ...(w.is_vehicle_weapon !== null && {
-                                '@_IsVehicleWeapon': w.is_vehicle_weapon,
-                            }),
-                            ...(w.use_racking_animation !== null && {
-                                '@_UseRackingAnimation':
-                                    w.use_racking_animation,
-                            }),
-                            ...(w.weapon_location !== null && {
-                                '@_WeaponLocation': w.weapon_location,
-                            }),
-                            ...(w.tint !== null && {
-                                '@_WeaponTintIndex': w.tint,
-                            }),
-                            ...(w.display_name !== null && {
-                                '@_WeaponDisplayName': w.display_name,
-                            }),
-
-                            WeaponComponents: {
-                                WeaponComponent: w.components.map((c) => ({
-                                    '@_ComponentHash': c,
-                                })),
-                            },
-                        };
-
-                        return weaponNode;
-                    }),
-                },
-            },
-        };
-
-        const xml = builder.build(obj);
-
-        setXmlOutput(xml);
-        setShowXmlOutput(true);
-    }
-
     return (
         <div class='main-content'>
             <div class='main-content-header'>
@@ -311,7 +257,13 @@ export default (props: {
                         </div>
                     </Show>
                     <button
-                        onClick={() => exportLoadout()}
+                        onClick={() =>
+                            exportLoadout({
+                                loadout: props.loadout,
+                                setXmlOutput,
+                                setShowXmlOutput,
+                            })
+                        }
                         title='Exports the current loadout as XML'
                     >
                         Export loadout
