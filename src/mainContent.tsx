@@ -276,6 +276,7 @@ export default (props: {
                                 setXmlOutput,
                                 setShowXmlOutput,
                                 selectedSavedLoadoutID,
+                                savedLoadouts,
                             })
                         }
                         title='Exports all saved loadouts as XML (Full file)'
