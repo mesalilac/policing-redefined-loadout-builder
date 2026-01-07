@@ -150,7 +150,7 @@ export default (props: {
                                         'weapons',
                                         (x) => x.hash === props.weapon.hash,
                                         'is_vehicle_weapon',
-                                        e.target.checked,
+                                        e.target.checked || null,
                                     );
                                     if (props.weapon.display_name === null)
                                         props.setLoadout(
@@ -192,7 +192,7 @@ export default (props: {
                                         'weapons',
                                         (x) => x.hash === props.weapon.hash,
                                         'use_racking_animation',
-                                        e.target.checked,
+                                        e.target.checked || null,
                                     )
                                 }
                             />

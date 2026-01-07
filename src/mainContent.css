@@ -7,6 +7,20 @@
     box-sizing: border-box;
 }
 
+.main-content-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dirty-state-indicator {
+    font-style: italic;
+    font-weight: bold;
+    color: #d97706;
+}
+
 .main-content-navbar {
     margin-top: 10px;
     display: flex;
