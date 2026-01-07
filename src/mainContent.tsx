@@ -7,7 +7,6 @@ import {
     DEFAULT_LOADOUT_NAME,
     DEFAULT_LOADOUT_WEAPONS,
     type T_Loadout,
-    type T_LoadoutWeapon,
     type T_SavedLoadout,
     type T_Weapon,
 } from './consts';

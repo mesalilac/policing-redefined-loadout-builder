@@ -1,4 +1,4 @@
-import { createMemo, createSignal, For, Show } from 'solid-js';
+import { createMemo, createSignal, For } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
 import type { T_Loadout, T_LoadoutWeapon, T_Weapon } from './consts';
 import './sidebar.css';
