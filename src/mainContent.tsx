@@ -9,6 +9,7 @@ import {
     type T_SavedLoadout,
     type T_Weapon,
 } from './consts';
+import { exportAllLoadouts } from './exportAllLoadouts';
 import { exportLoadout } from './exportLoadout';
 import Loadout from './loadout';
 import './mainContent.css';
@@ -267,6 +268,18 @@ export default (props: {
                         title='Exports the current loadout as XML'
                     >
                         Export loadout
+                    </button>
+                    <button
+                        onClick={() =>
+                            exportAllLoadouts({
+                                setXmlOutput,
+                                setShowXmlOutput,
+                                selectedSavedLoadoutID,
+                            })
+                        }
+                        title='Exports all saved loadouts as XML (Full file)'
+                    >
+                        Export all loadouts
                     </button>
                 </div>
             </div>
