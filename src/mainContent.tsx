@@ -140,6 +140,21 @@ export default (props: {
         syncSavedLoadouts();
     };
 
+    const copyToClipboard = async () => {
+        if (!xmlOutput()) return;
+
+        const cleanXml = xmlOutput().replace(
+            /[\u00A0\u1680\u180E\u2000-\u200B\u202F\u205F\u3000\uFEFF]/g,
+            ' ',
+        );
+
+        try {
+            await navigator.clipboard.writeText(cleanXml);
+        } catch (err) {
+            toast.error('Failed to copy: ' + err);
+        }
+    };
+
     return (
         <div class='main-content'>
             <div class='main-content-header'>
@@ -245,7 +260,12 @@ export default (props: {
                     </button>
                     <Show when={showXmlOutput()}>
                         <div class='main-content-xml-output-dialog'>
-                            <h1>XML output</h1>
+                            <div class='main-content-xml-output-dialog-header'>
+                                <h1>XML output</h1>
+                                <button onClick={() => copyToClipboard()}>
+                                    Copy to clipboard
+                                </button>
+                            </div>
                             <textarea
                                 class='main-content-xml-textarea'
                                 value={xmlOutput()}

@@ -65,6 +65,11 @@
     gap: 1rem;
 }
 
+.main-content-xml-output-dialog-header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .main-content-xml-output-dialog button {
     padding: 1rem;
 }
