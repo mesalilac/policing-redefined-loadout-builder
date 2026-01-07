@@ -5,6 +5,10 @@ A [loadout builder](https://mesalilac.github.io/policing-redefined-loadout-build
 - [images of weapons](https://docs.fivem.net/docs/game-references/weapon-models/)
 - [images of weapon components](https://github.com/Lorraxs/GTA5-weawpon-component-png)
 
+## Preview
+
+![Preview image](./preview.png)
+
 ## Usage
 
 ```bash
