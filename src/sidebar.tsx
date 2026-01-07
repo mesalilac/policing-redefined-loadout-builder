@@ -57,8 +57,8 @@ export default (props: {
         };
 
         props.setLoadout('weapons', (prevWeapons) => [
-            ...prevWeapons,
             new_weapon,
+            ...prevWeapons,
         ]);
     }
 
