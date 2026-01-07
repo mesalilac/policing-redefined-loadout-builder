@@ -30,25 +30,40 @@ export default (props: {
         );
     }
 
-    function moveWeapon(direction: number) {
-        const newList = [...props.loadout.weapons];
-        const currentIndex = props.currentIndex;
-        const targetIndex = currentIndex + direction;
+    const moveWeapon = (
+        index: number,
+        direction: 'start' | 'up' | 'end' | 'down',
+    ) => {
+        props.setLoadout('weapons', (prevWeapons) => {
+            if (prevWeapons.length < 2) return prevWeapons;
 
-        if (
-            targetIndex < 0 ||
-            targetIndex >= newList.length ||
-            targetIndex === currentIndex
-        )
-            return;
+            const newWeapons = [...prevWeapons];
 
-        [newList[currentIndex], newList[targetIndex]] = [
-            newList[targetIndex],
-            newList[currentIndex],
-        ];
+            if (direction === 'start' || direction === 'end') {
+                const [movedItem] = newWeapons.splice(index, 1);
 
-        props.setLoadout('weapons', newList);
-    }
+                if (direction === 'start') {
+                    newWeapons.unshift(movedItem);
+                } else {
+                    newWeapons.push(movedItem);
+                }
+
+                return newWeapons;
+            }
+
+            const targetIndex = direction === 'up' ? index - 1 : index + 1;
+
+            if (targetIndex < 0 || targetIndex >= newWeapons.length)
+                return prevWeapons;
+
+            [newWeapons[index], newWeapons[targetIndex]] = [
+                newWeapons[targetIndex],
+                newWeapons[index],
+            ];
+
+            return newWeapons;
+        });
+    };
 
     return (
         <div class='loadout-weapon-list-item'>
@@ -56,8 +71,8 @@ export default (props: {
                 <button
                     onClick={(e) =>
                         e.shiftKey
-                            ? moveWeapon(-props.currentIndex)
-                            : moveWeapon(-1)
+                            ? moveWeapon(props.currentIndex, 'start')
+                            : moveWeapon(props.currentIndex, 'up')
                     }
                     disabled={props.currentIndex === 0}
                     title='Move weapon backward (Shift + Click to send to start)'
@@ -67,8 +82,8 @@ export default (props: {
                 <button
                     onClick={(e) =>
                         e.shiftKey
-                            ? moveWeapon(props.loadout.weapons.length - 1)
-                            : moveWeapon(1)
+                            ? moveWeapon(props.currentIndex, 'end')
+                            : moveWeapon(props.currentIndex, 'down')
                     }
                     disabled={
                         props.currentIndex === props.loadout.weapons.length - 1
