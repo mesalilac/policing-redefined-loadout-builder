@@ -293,6 +293,7 @@ export default (props: {
                                         >
                                             <img
                                                 src={`./components/${component.hash}.png`}
+                                                alt=''
                                                 class='loadout-weapon-list-item-component-image'
                                             />
                                             {component.title}
