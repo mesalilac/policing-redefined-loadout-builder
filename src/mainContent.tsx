@@ -78,6 +78,10 @@ export default (props: {
             });
 
             setSavedLoadouts(newSavedLoadouts);
+            setOriginalLoadout({
+                name: props.loadout.name,
+                weapons: JSON.parse(JSON.stringify(props.loadout.weapons)),
+            });
         } else {
             const id = Date.now();
 
