@@ -79,7 +79,7 @@ export default (props: {
             setSavedLoadouts(newSavedLoadouts);
             setOriginalLoadout({
                 name: props.loadout.name,
-                weapons: structuredClone(props.loadout.weapons),
+                weapons: JSON.parse(JSON.stringify(props.loadout.weapons)),
             });
         } else {
             const id = Date.now();
@@ -107,7 +107,7 @@ export default (props: {
 
         if (loadout) {
             props.setLoadout('name', loadout.name);
-            props.setLoadout('weapons', structuredClone(loadout.weapons));
+            props.setLoadout('weapons', JSON.parse(JSON.stringify(loadout.weapons)));
             setOriginalLoadout({
                 name: loadout.name,
                 weapons: loadout.weapons,
